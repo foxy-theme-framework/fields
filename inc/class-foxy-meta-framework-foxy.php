@@ -20,6 +20,12 @@ class Foxy_Meta_Framework_Foxy extends Foxy_Meta_Framework_Base {
 		list( $tabs, $fields ) = $this->group_all_fields( $args['args'] );
 		$factory = new Foxy_Field_Factory_Post_Meta( $post, $tabs, $fields );
 
+		Foxy::ui()->tag( array(
+			'name'    => 'div',
+			'context' => 'foxy-fields-metabox',
+			'class'   => $factory->generate_class_names(),
+		) );
 		$factory->manufacture();
+		echo '</div>';
 	}
 }
