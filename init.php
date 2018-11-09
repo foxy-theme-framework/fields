@@ -14,8 +14,9 @@
 
 function foxy_fields_define_constants() {
 	define( 'FOXY_FIELDS_INIT_FILE', __FILE__ );
-	define( 'FOXY_FIELDS_ROOT_DIR', dirname( FOXY_FIELDS_INIT_FILE ) );
-	define( 'FOXY_FIELDS_ASSETS_URL', str_replace( ABSPATH, '', FOXY_FIELDS_ROOT_DIR ) . '/assets/' );
+	define( 'FOXY_FIELDS_ROOT_DIR', dirname( FOXY_FIELDS_INIT_FILE ) . '/' );
+	define( 'FOXY_FIELDS_INC_DIR', FOXY_FIELDS_ROOT_DIR . 'inc/' );
+	define( 'FOXY_FIELDS_ASSETS_URL', str_replace( ABSPATH, '', FOXY_FIELDS_ROOT_DIR ) . 'assets/' );
 }
 
 foxy_fields_define_constants();

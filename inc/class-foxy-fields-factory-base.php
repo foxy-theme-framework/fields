@@ -1,17 +1,25 @@
 <?php
 
-abstract class Foxy_Field_Factory_Base {
+abstract class Foxy_Fields_Factory_Base {
 	protected $data_parser;
 	protected $object;
 	protected $tabs;
 	protected $fields;
 
 	public function __construct( $object, $tabs, $fields ) {
-		$this->data_parser = new Foxy_Field_Data_Parser();
+		$this->data_parser = new Foxy_Fields_Data_Parser();
 		$this->object = $object;
 		$this->tabs = $tabs;
 		$this->fields = $fields;
+	}
 
+	public function generate_class_names() {
+		$classe_names = array( 'foxy-fields' );
+
+		if ( isset( $this->object->post_type ) ) {
+			$class_names[] = sprintf( '%s-fields', $this->object->post_type );
+		}
+		return implode( ' ', $classe_names );
 	}
 
 	public function generate_tabs_wrap() {
@@ -41,8 +49,6 @@ abstract class Foxy_Field_Factory_Base {
 		return $title;
 	}
 
-
-
 	public function generate_tab_content() {
 		if ( empty( $this->tabs['fields'] ) ) {
 			return;
@@ -66,7 +72,7 @@ abstract class Foxy_Field_Factory_Base {
 					'class'   => 'foxy-tab foxy-fields-tab',
 				)
 			);
-			printf( '<a href="#%s">%s</a>', esc_attr( $tab['id'] ), $this->generate_tab_title( $tab ) ); // WPCS: XSS ok.
+			printf( '<a href="#foxy-%s">%s</a>', esc_attr( $tab['id'] ), $this->generate_tab_title( $tab ) ); // WPCS: XSS ok.
 			echo '</li>';
 		}
 		echo '</ul></div>';
@@ -85,23 +91,58 @@ abstract class Foxy_Field_Factory_Base {
 	}
 
 	public function generate_fields( $fields ) {
+		foreach ($fields as $field) {
+			if ( empty( $field['id'] ) || empty( $field['type'] ) ) {
+				continue;
+			}
+			$field_callback = apply_filters( "foxy_fields_{$field['type']}_callback", false );
+
+			if ( ! is_callable( $field_callback ) ) {
+
+				$field_class = sprintf(
+					'Foxy_Fields_%s_Field',
+					ucfirst( $field['type'] )
+				);
+
+				$filename = sprintf(
+					'%1$s%2$s/class-foxy-fields-%2$s-field.php',
+					FOXY_FIELDS_INC_DIR,
+					strtolower( $field['type'] )
+				);
+
+				if ( ! class_exists( $field_class ) ) {
+					if ( file_exists( $filename ) ) {
+						require_once $filename;
+					} else {
+						continue;
+					}
+					if ( ! class_exists( $field_class ) ) {
+						continue;
+					}
+				}
+				$field_callback = array( new $field_class(), 'output' );
+			}
+			$this->generate_field( $field, $field_callback );
+		}
 
 	}
-
-	abstract public function generate_field( $field );
 
 	public function generate_fields_wrap( $tab_id ) {
-
+		$class_names = array( 'foxy-fields-wrap' );
+		if ( 'fxng' !== $tab_id ) {
+			$class_name[] = 'has-tab';
+			$class_name[] = sprintf( 'tab-%s', esc_attr( $tab_id ) );
+		} else {
+			$class_name[] = 'no-tab';
+		}
+		return array(
+			'context' => 'foxy-fields-wrap',
+			'id'      => esc_attr( 'foxy-' . $tab_id ),
+			'class'   => implode( ' ', $class_names ),
+		);
 	}
 
-	public function generate_tab_id() {
-	}
-
-	public function generate_field_class_names() {
-	}
-
-	public function generate_field_label() {
-	}
+	abstract public function generate_field( $field, $callback );
 
 	abstract public function manufacture();
 }
