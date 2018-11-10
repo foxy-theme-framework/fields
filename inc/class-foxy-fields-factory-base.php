@@ -1,15 +1,13 @@
 <?php
 
 abstract class Foxy_Fields_Factory_Base {
-	protected $data_parser;
 	protected $object;
 	protected $tabs;
 	protected $fields;
 
 	public function __construct( $object, $tabs, $fields ) {
-		$this->data_parser = new Foxy_Fields_Data_Parser();
 		$this->object = $object;
-		$this->tabs = $tabs;
+		$this->tabs   = $tabs;
 		$this->fields = $fields;
 	}
 
@@ -46,6 +44,10 @@ abstract class Foxy_Fields_Factory_Base {
 			);
 		}
 		$title .= sprintf( '<span class="foxy-title-text foxy-fields-title">%s</span>', esc_html( $tab['title'] ) );
+
+		// Free up memory.
+		unset( $tab );
+
 		return $title;
 	}
 
@@ -76,6 +78,9 @@ abstract class Foxy_Fields_Factory_Base {
 			echo '</li>';
 		}
 		echo '</ul></div>';
+
+		// Free up memory.
+		unset( $tab );
 	}
 
 	public function generate_fields_content() {
@@ -88,10 +93,13 @@ abstract class Foxy_Fields_Factory_Base {
 			$this->generate_fields( $fields );
 			echo '</div>';
 		}
+
+		// Free up memory.
+		unset( $tab, $fields );
 	}
 
 	public function generate_fields( $fields ) {
-		foreach ($fields as $field) {
+		foreach ( $fields as $field ) {
 			if ( empty( $field['id'] ) || empty( $field['type'] ) ) {
 				continue;
 			}
@@ -120,11 +128,18 @@ abstract class Foxy_Fields_Factory_Base {
 						continue;
 					}
 				}
-				$field_callback = array( new $field_class(), 'output' );
+
+				$field_callback = array( new $field_class( $this->object, $field ), 'output' );
+
+				// Free up memory.
+				unset( $field_class, $filename );
 			}
+
 			$this->generate_field( $field, $field_callback );
 		}
 
+		// Free up memory.
+		unset( $fields, $field, $field_callback );
 	}
 
 	public function generate_fields_wrap( $tab_id ) {
