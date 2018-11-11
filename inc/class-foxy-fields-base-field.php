@@ -4,14 +4,20 @@ abstract class Foxy_Fields_Base_Field {
 	protected $data_parser;
 	protected $object;
 	protected $field;
+	protected $is_tax;
 
 	public function __construct( $object, $field ) {
 		$this->object = $object;
 		$this->field  = wp_parse_args(
 			$field, array(
-				'title'    => '',
-				'subtitle' => '',
-				'desc'     => '',
+				'title'      => '',
+				'subtitle'   => '',
+				'desc'       => '',
+				'default'    => '',
+				'value'      => '',
+				'options'    => '',
+				'data'       => '',
+				'dont_value' => '',
 			)
 		);
 
@@ -19,9 +25,48 @@ abstract class Foxy_Fields_Base_Field {
 			$this->object,
 			$this->field
 		);
+
+		if ( ! empty( $this->field['data'] ) ) {
+			$this->field['options'] = $this->data_parser->get_options();
+		}
+
+		$this->is_tax = ( 0 === strpos( $this->field['id'], 'tax_input[' ) );
 	}
 
 	public static function enqueue() {
+	}
+
+	public function choosed( $current ) {
+		$choosed = false;
+		if(empty($this->field['data'])) {
+			$choosed = $this->data_parser->value();
+		} else {
+			list($type, $target) = explode('@', $this->field['data']);
+			switch($type) {
+				case 'post_tag':
+					$target = 'post_tag';
+					goto taxonomy;
+				case 'category':
+					$target = 'category';
+					goto taxonomy;
+				case 'taxonomy':
+					taxonomy:
+					$choosed = wp_get_post_terms($this->object->ID, $target, array(
+						'orderby' => 'name',
+						'order' => 'ASC',
+						'fields' => 'ids',
+					));
+					break;
+				default:
+					$choosed = $this->data_parser->value();
+				break;
+			}
+		}
+		if ( is_array($choosed) ) {
+			return in_array($current, $choosed, true);
+		} else {
+			return $choosed == $current;
+		}
 	}
 
 	public function generate_field_classes( $field ) {
