@@ -1,6 +1,9 @@
 .foxy-fields a {
   text-decoration: none;
 }
+.foxy-fields-field {
+  margin-bottom: 10px;
+}
 
 .foxy-fields-tabs {
   border-bottom: 1px solid #ddd;
