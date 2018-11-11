@@ -23,7 +23,11 @@ foxy_fields_define_constants();
 
 spl_autoload_register(
 	function( $class_name ) {
-		$widget_file = sprintf( '%s/inc/class-%s.php', FOXY_FIELDS_ROOT_DIR, foxy_make_slug( $class_name ) );
+		$widget_file = sprintf( '%s/inc/class-%s.php', FOXY_FIELDS_ROOT_DIR, preg_replace(
+			'/_/',
+			'-',
+			sanitize_title( $class_name )
+		) );
 		if ( file_exists( $widget_file ) ) {
 			require_once $widget_file;
 		}

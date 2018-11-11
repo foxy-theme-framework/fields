@@ -9,7 +9,7 @@ class Foxy_Fields_Factory_Post_Meta extends Foxy_Fields_Factory_Base {
 	 * @return string
 	 */
 	public function generate_field( $field, $callback ) {
-		$class_names = 'foxy-field foxy-fields-field';
+		$class_names = 'foxy-field foxy-fields-field fx-row';
 		if ( is_array( $callback ) && $callback[0] instanceof Foxy_Fields_Base_Field ) {
 			$class_names .= ' ' . $callback[0]->generate_field_classes( $field );
 		} else {
