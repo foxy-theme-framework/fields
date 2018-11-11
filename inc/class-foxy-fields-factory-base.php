@@ -5,10 +5,33 @@ abstract class Foxy_Fields_Factory_Base {
 	protected $tabs;
 	protected $fields;
 
+	/**
+	 * Foxy_Fields_Factory_Base constructor
+	 *
+	 * @param WP_Post|WP_Term|WP_User $object Set object need to add meta data.
+	 * @param array                   $tabs   Add meta data with tabnav if $tabs have values.
+	 * @param array                   $fields List fields will to be added to metabox.
+	 */
 	public function __construct( $object, $tabs, $fields ) {
+		/**
+		 * Set value current object to factory
+		 */
 		$this->object = $object;
-		$this->tabs   = $tabs;
-		$this->fields = $fields;
+
+		/**
+		 * Parse tabs with default values
+		 */
+		$this->tabs = wp_parse_args( $tabs, array(
+			'style'  => 'horizontal',
+			'icon'   => '',
+			'image'  => '',
+			'fields' => array(),
+		));
+
+		/**
+		 * Add fields to factory
+		 */
+		$this->fields = (array) $fields;
 	}
 
 	public function generate_class_names() {
@@ -106,33 +129,17 @@ abstract class Foxy_Fields_Factory_Base {
 			$field_callback = apply_filters( "foxy_fields_{$field['type']}_callback", false );
 
 			if ( ! is_callable( $field_callback ) ) {
-
 				$field_class = sprintf(
 					'Foxy_Fields_%s_Field',
 					ucfirst( $field['type'] )
 				);
-
-				$filename = sprintf(
-					'%1$s%2$s/class-foxy-fields-%2$s-field.php',
-					FOXY_FIELDS_INC_DIR,
-					strtolower( $field['type'] )
-				);
-
 				if ( ! class_exists( $field_class ) ) {
-					if ( file_exists( $filename ) ) {
-						require_once $filename;
-					} else {
-						continue;
-					}
-					if ( ! class_exists( $field_class ) ) {
-						continue;
-					}
+					continue;
 				}
-
 				$field_callback = array( new $field_class( $this->object, $field ), 'output' );
 
 				// Free up memory.
-				unset( $field_class, $filename );
+				unset( $field_class );
 			}
 
 			$this->generate_field( $field, $field_callback );

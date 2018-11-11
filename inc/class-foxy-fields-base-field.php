@@ -7,12 +7,21 @@ abstract class Foxy_Fields_Base_Field {
 
 	public function __construct( $object, $field ) {
 		$this->object = $object;
-		$this->field = $field;
+		$this->field  = wp_parse_args(
+			$field, array(
+				'title'    => '',
+				'subtitle' => '',
+				'desc'     => '',
+			)
+		);
 
 		$this->data_parser = new Foxy_Fields_Data_Parser(
 			$this->object,
 			$this->field
 		);
+	}
+
+	public static function enqueue() {
 	}
 
 	public function generate_field_classes( $field ) {
@@ -38,9 +47,7 @@ abstract class Foxy_Fields_Base_Field {
 	}
 
 	public function field_label() {
-		$field  = $this->field;
-
-		$tag = wp_parse_args( $field['label_width'], array(
+		$tag = wp_parse_args( $this->field, array(
 			'context'         => 'foxy-field-label-wrap',
 			'class'           => 'foxy-label-wrap foxy-fields-label-wrap',
 			'mobile_columns'  => 12,
@@ -55,18 +62,18 @@ abstract class Foxy_Fields_Base_Field {
 				'class'   => 'foxy-label foxy-fields-label',
 			),
 			array(
-				'for' => sprintf( 'foxy-fields-%s', esc_attr( $field['id'] ) ),
+				'for' => sprintf( 'foxy-fields-%s', esc_attr( $this->field['id'] ) ),
 			)
 		);
-		printf( '%s</label>', esc_html( $field['title'] ) );
-		if ( ! empty( $field['subtitle'] ) ) {
+		printf( '%s</label>', esc_html( $this->field['title'] ) );
+		if ( ! empty( $this->field['subtitle'] ) ) {
 			Foxy::ui()->tag(
 				array(
 					'context' => 'foxy-fields-subtitle',
 					'class'   => 'foxy-subtitle foxy-fields-subtitle',
 				)
 			);
-			printf( '%s</div>', esc_html( $field['subtitle'] ) );
+			printf( '%s</div>', esc_html( $this->field['subtitle'] ) );
 		}
 		echo '</div>';
 	}
@@ -84,7 +91,24 @@ abstract class Foxy_Fields_Base_Field {
 
 	public function output() {
 		$this->field_label();
+
+		Foxy::ui()->tag(
+			array(
+				'context'         => 'foxy-fields-content',
+				'class'           => sprintf(
+					'foxy-content foxy-fields-content %s-type-content %s-content',
+					esc_attr( $this->field['type'] ),
+					esc_attr( $this->field['id'] )
+				),
+				'mobile_columns'   => 12,
+				'tablet_columns'   => 8,
+				'desktop_columns'  => 9,
+			)
+		);
+
 		$this->field_content();
 		$this->field_desc();
+
+		echo '</div>';
 	}
 }

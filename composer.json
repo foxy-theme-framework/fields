@@ -1,0 +1,15 @@
+{
+    "name": "foxy-theme/fields",
+    "type": "library",
+    "require": {
+        "php": ">= 5.4",
+        "foxy-theme/foxy": "*"
+    },
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "WPClouds",
+            "email": "support@wpclouds.com"
+        }
+    ]
+}

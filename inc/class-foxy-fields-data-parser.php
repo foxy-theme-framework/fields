@@ -9,6 +9,6 @@ class Foxy_Fields_Data_Parser {
 	}
 
 	public function value() {
-		return Foxy::meta()->get( $this->field['id'], $object, true );
+		return Foxy::meta()->get( $this->field['id'], $this->object, true );
 	}
 }
