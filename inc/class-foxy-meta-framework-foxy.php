@@ -11,7 +11,7 @@ class Foxy_Meta_Framework_Foxy extends Foxy_Meta_Framework_Base {
 
 	public function save_post_metas( $post_id, $post ) {
 		$meta_boxes = apply_filters( 'foxy_post_metas', array() );
-		$post_metas = $this->filter_post_type_metas( $post, $meta_boxes );
+		$post_metas = foxy_filter_post_type_metas( $post->post_type, $meta_boxes );
 
 		// Free up memory.
 		unset( $meta_boxes );
@@ -38,7 +38,7 @@ class Foxy_Meta_Framework_Foxy extends Foxy_Meta_Framework_Base {
 		)->css( 'foxy-fields-base' );
 
 		$meta_boxes = apply_filters( 'foxy_post_metas', array() );
-		$post_metas = $this->filter_post_type_metas( get_current_screen(), $meta_boxes );
+		$post_metas = foxy_filter_post_type_metas( get_current_screen()->post_type, $meta_boxes );
 
 		$field_types = array_unique(
 			array_column( $post_metas, 'type' )
@@ -97,11 +97,11 @@ class Foxy_Meta_Framework_Foxy extends Foxy_Meta_Framework_Base {
 	}
 
 	public function metabox_callback( $post, $args ) {
-		list( $tabs, $fields ) = $this->group_all_fields( $args['args'] );
+		list( $tabs, $fields ) = foxy_group_all_meta_fields( $args['args'] );
 		/**
 		 * Create factory instance
 		 */
-		$factory = new Foxy_Fields_Factory_Post_Meta( $post, $tabs, $fields );
+		$factory = new Foxy_Fields_Factory_Post_Meta( $tabs, $fields, $post );
 
 		Foxy::ui()->tag(
 			array(
