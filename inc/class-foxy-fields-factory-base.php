@@ -12,7 +12,7 @@ abstract class Foxy_Fields_Factory_Base {
 	 * @param array                   $tabs   Add meta data with tabnav if $tabs have values.
 	 * @param array                   $fields List fields will to be added to metabox.
 	 */
-	public function __construct( $object, $tabs, $fields ) {
+	public function __construct( $tabs, $fields, $object = null ) {
 		/**
 		 * Set value current object to factory
 		 */
