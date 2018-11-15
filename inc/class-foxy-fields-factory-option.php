@@ -1,9 +1,9 @@
 <?php
 
 class Foxy_Fields_Factory_Option {
-	protected $options = array();
+	protected $options  = array();
 	protected $sections = array();
-	protected $fields = array();
+	protected $fields   = array();
 
 	public function add_fields( $id, $fields ) {
 

@@ -4,7 +4,7 @@ class Foxy_Fields_Factory_Post_Meta extends Foxy_Fields_Factory_Base {
 	/**
 	 * Generate field content via callback
 	 *
-	 * @param array $field Field args.
+	 * @param array        $field Field args.
 	 * @param string|array $callback Callback function.
 	 * @return string
 	 */

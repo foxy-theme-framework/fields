@@ -21,12 +21,14 @@ abstract class Foxy_Fields_Factory_Base {
 		/**
 		 * Parse tabs with default values
 		 */
-		$this->tabs = wp_parse_args( $tabs, array(
-			'style'  => 'horizontal',
-			'icon'   => '',
-			'image'  => '',
-			'fields' => array(),
-		));
+		$this->tabs = wp_parse_args(
+			$tabs, array(
+				'style'  => 'horizontal',
+				'icon'   => '',
+				'image'  => '',
+				'fields' => array(),
+			)
+		);
 
 		/**
 		 * Add fields to factory
@@ -111,7 +113,7 @@ abstract class Foxy_Fields_Factory_Base {
 			esc_html_e( "Don't has any fields for display", 'foxy' );
 			return;
 		}
-		foreach ($this->fields as $tab => $fields ) {
+		foreach ( $this->fields as $tab => $fields ) {
 			Foxy::ui()->tag( $this->generate_fields_wrap( $tab ) );
 			$this->generate_fields( $fields );
 			echo '</div>';

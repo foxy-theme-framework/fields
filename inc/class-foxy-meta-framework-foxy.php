@@ -3,7 +3,7 @@ class Foxy_Meta_Framework_Foxy extends Foxy_Meta_Framework_Base {
 	protected $fields_info;
 
 	public function __construct() {
-		add_action( 'save_post', array( $this, 'save_post_metas' ), 10 ,2 );
+		add_action( 'save_post', array( $this, 'save_post_metas' ), 10, 2 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_scripts' ) );
 
 		$this->fields_info = foxy_get_partial_info( FOXY_FIELDS_INIT_FILE );
@@ -17,7 +17,7 @@ class Foxy_Meta_Framework_Foxy extends Foxy_Meta_Framework_Base {
 		unset( $meta_boxes );
 
 		foreach ( $post_metas as $field ) {
-			if ( empty( $field['type'] ) || empty( $field['id'] ) ||  0 === strpos($field['id'], 'tax_input[') ) {
+			if ( empty( $field['type'] ) || empty( $field['id'] ) || 0 === strpos( $field['id'], 'tax_input[' ) ) {
 				continue;
 			}
 
