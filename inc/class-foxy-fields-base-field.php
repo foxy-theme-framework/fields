@@ -38,11 +38,11 @@ abstract class Foxy_Fields_Base_Field {
 
 	public function choosed( $current ) {
 		$choosed = false;
-		if(empty($this->field['data'])) {
+		if ( empty( $this->field['data'] ) ) {
 			$choosed = $this->data_parser->value();
 		} else {
-			list($type, $target) = explode('@', $this->field['data']);
-			switch($type) {
+			list($type, $target) = explode( '@', $this->field['data'] );
+			switch ( $type ) {
 				case 'post_tag':
 					$target = 'post_tag';
 					goto taxonomy;
@@ -51,19 +51,21 @@ abstract class Foxy_Fields_Base_Field {
 					goto taxonomy;
 				case 'taxonomy':
 					taxonomy:
-					$choosed = wp_get_post_terms($this->object->ID, $target, array(
-						'orderby' => 'name',
-						'order' => 'ASC',
-						'fields' => 'ids',
-					));
+					$choosed = wp_get_post_terms(
+						$this->object->ID, $target, array(
+							'orderby' => 'name',
+							'order'   => 'ASC',
+							'fields'  => 'ids',
+						)
+					);
 					break;
 				default:
 					$choosed = $this->data_parser->value();
-				break;
+					break;
 			}
 		}
-		if ( is_array($choosed) ) {
-			return in_array($current, $choosed, true);
+		if ( is_array( $choosed ) ) {
+			return in_array( $current, $choosed, true );
 		} else {
 			return $choosed == $current;
 		}
@@ -92,13 +94,15 @@ abstract class Foxy_Fields_Base_Field {
 	}
 
 	public function field_label() {
-		$tag = wp_parse_args( $this->field, array(
-			'context'         => 'foxy-field-label-wrap',
-			'class'           => 'foxy-label-wrap foxy-fields-label-wrap',
-			'mobile_columns'  => 12,
-			'tablet_columns'  => 4,
-			'desktop_columns' => 3,
-		));
+		$tag = wp_parse_args(
+			$this->field, array(
+				'context'         => 'foxy-field-label-wrap',
+				'class'           => 'foxy-label-wrap foxy-fields-label-wrap',
+				'mobile_columns'  => 12,
+				'tablet_columns'  => 4,
+				'desktop_columns' => 3,
+			)
+		);
 		Foxy::ui()->tag( $tag );
 		Foxy::ui()->tag(
 			array(
@@ -126,10 +130,12 @@ abstract class Foxy_Fields_Base_Field {
 	public function field_desc() {
 		$field = $this->field;
 		if ( ! empty( $field['desc'] ) ) {
-			Foxy::ui()->tag( array(
-				'context' => 'foxy-fields-desc',
-				'class'   => 'foxy-desc foxy-fields-desc',
-			) );
+			Foxy::ui()->tag(
+				array(
+					'context' => 'foxy-fields-desc',
+					'class'   => 'foxy-desc foxy-fields-desc',
+				)
+			);
 			printf( '%s</div>', esc_html() );
 		}
 	}
@@ -145,9 +151,9 @@ abstract class Foxy_Fields_Base_Field {
 					esc_attr( $this->field['type'] ),
 					esc_attr( $this->field['id'] )
 				),
-				'mobile_columns'   => 12,
-				'tablet_columns'   => 8,
-				'desktop_columns'  => 9,
+				'mobile_columns'  => 12,
+				'tablet_columns'  => 8,
+				'desktop_columns' => 9,
 			)
 		);
 
