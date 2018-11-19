@@ -31,7 +31,7 @@ class Foxy_Fields_Data_Parser {
 				goto post_type;
 			case 'post_type':
 				post_type:
-				return $this->get_posts( $target );
+				return $this->get_posts( $target, $this->field['args'] );
 		}
 	}
 
@@ -42,7 +42,7 @@ class Foxy_Fields_Data_Parser {
 				'post_status' => 'publish',
 			)
 		);
-		$query = "SELECT {$wpdb->posts}.ID, {$wpdb->posts}.post_title FROM {$wpdb->posts} WHERE post_status";
+		$query = "SELECT {$wpdb->posts}.ID, {$wpdb->posts}.post_name , {$wpdb->posts}.post_title FROM {$wpdb->posts} WHERE post_status";
 		if ( is_array( $args['post_status'] ) ) {
 			$query .= sprintf( ' IN (%s)', implode( ',', $args['post_status'] ) );
 		} elseif ( is_string( $args['post_status'] ) ) {
@@ -53,6 +53,8 @@ class Foxy_Fields_Data_Parser {
 		$query .= " AND post_type='{$post_type}'";
 		$data   = $wpdb->get_results( $query, 'ARRAY_A' );
 
-		return array_column( $data, 'post_title', 'ID' );
+		$key_field = array_get( $args, 'key', 'ID' );
+
+		return array_column( $data, 'post_title', $key_field );
 	}
 }

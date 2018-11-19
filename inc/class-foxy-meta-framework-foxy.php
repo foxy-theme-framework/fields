@@ -21,11 +21,9 @@ class Foxy_Meta_Framework_Foxy extends Foxy_Meta_Framework_Base {
 				continue;
 			}
 
-
-
 			if ( isset( $_POST[ $field['id'] ] ) ) {
 				update_post_meta( $post_id, $field['id'], $_POST[ $field['id'] ] );
-			} else {
+			} elseif( ! empty($field['delete_empty'] ) ) {
 				delete_post_meta( $post_id, $field['id'] );
 			}
 		}
