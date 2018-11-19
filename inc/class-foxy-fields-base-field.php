@@ -128,15 +128,14 @@ abstract class Foxy_Fields_Base_Field {
 	}
 
 	public function field_desc() {
-		$field = $this->field;
-		if ( ! empty( $field['desc'] ) ) {
+		if ( ! empty( $this->field['desc'] ) ) {
 			Foxy::ui()->tag(
 				array(
 					'context' => 'foxy-fields-desc',
 					'class'   => 'foxy-desc foxy-fields-desc',
 				)
 			);
-			printf( '%s</div>', esc_html() );
+			printf( '%s</div>', esc_html( $this->field['desc'] ) );
 		}
 	}
 
