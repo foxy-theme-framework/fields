@@ -10,14 +10,16 @@ abstract class Foxy_Fields_Base_Field {
 		$this->object = $object;
 		$this->field  = wp_parse_args(
 			$field, array(
-				'title'      => '',
-				'subtitle'   => '',
-				'desc'       => '',
-				'default'    => '',
-				'value'      => '',
-				'options'    => '',
-				'data'       => '',
-				'dont_value' => '',
+				'title'        => '',
+				'subtitle'     => '',
+				'desc'         => '',
+				'default'      => '',
+				'value'        => '',
+				'options'      => '',
+				'data'         => '',
+				'dont_value'   => '',
+				'args'         =>  array(),
+				'delete_empty' => true,
 			)
 		);
 
