@@ -96,6 +96,10 @@ class Foxy_Meta_Framework_Foxy extends Foxy_Meta_Framework_Base {
 		return get_metadata( 'post', $post_id, $meta_key, $single );
 	}
 
+	public function set( $post_id, $meta_key, $value ) {
+		return update_metadata( 'post', $post_id, $meta_key, $value );
+	}
+
 	public function metabox_callback( $post, $args ) {
 		list( $tabs, $fields ) = foxy_group_all_meta_fields( $args['args'] );
 		/**
