@@ -12,14 +12,16 @@ class Foxy_Meta_Framework_Foxy extends Foxy_Meta_Framework_Base {
 	public function save_post_metas( $post_id, $post ) {
 		$meta_boxes = apply_filters( 'foxy_post_metas', array() );
 		$post_metas = foxy_filter_post_type_metas( $post->post_type, $meta_boxes );
-
 		// Free up memory.
 		unset( $meta_boxes );
 
 		foreach ( $post_metas as $field ) {
+
 			if ( empty( $field['type'] ) || empty( $field['id'] ) || 0 === strpos( $field['id'], 'tax_input[' ) ) {
 				continue;
 			}
+
+
 
 			if ( isset( $_POST[ $field['id'] ] ) ) {
 				update_post_meta( $post_id, $field['id'], $_POST[ $field['id'] ] );
