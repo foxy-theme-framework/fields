@@ -61,7 +61,7 @@ class Foxy_Meta_Framework_Foxy extends Foxy_Meta_Framework_Base {
 			if ( ! is_callable( $field_callback ) ) {
 				$filename = sprintf(
 					'%1$s%2$s/class-foxy-fields-%2$s-field.php',
-					FOXY_FIELDS_INC_DIR,
+					FOXY_FIELDS_SRC_DIR,
 					strtolower( $field_type )
 				);
 

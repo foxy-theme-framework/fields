@@ -3,7 +3,7 @@
     "type": "library",
     "require": {
         "php": ">= 5.4",
-        "foxy-theme/foxy": "*"
+        "foxy-theme-framework/foxy": "*"
     },
     "license": "GPLv3",
     "authors": [
@@ -11,5 +11,10 @@
             "name": "WPClouds",
             "email": "support@wpclouds.com"
         }
-    ]
+    ],
+    "autoload": {
+        "files": [
+            "init.php"
+        ]
+    }
 }
