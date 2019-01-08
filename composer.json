@@ -1,20 +1,14 @@
 {
-    "name": "foxy-theme-framework/fields",
+    "name": "jankx/fields",
     "type": "library",
     "require": {
-        "php": ">= 5.4",
-        "foxy-theme-framework/foxy": "*"
+        "php": ">= 5.4"
     },
-    "license": "GPLv3",
+    "license": "MIT",
     "authors": [
         {
-            "name": "WPClouds",
-            "email": "support@wpclouds.com"
+            "name": "Puleeno Nguyen",
+            "email": "puleeno@gmail.com"
         }
     ],
-    "autoload": {
-        "files": [
-            "init.php"
-        ]
-    }
 }
