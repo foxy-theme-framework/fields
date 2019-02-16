@@ -1,13 +1,14 @@
 {
-    "name": "jankx/fields",
-    "description": "Jankx Fields is a simple framework used to create meta box, settings, form, etc",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Puleeno Nguyen",
-            "email": "puleeno@gmail.com"
-        }
-    ],
-    "require": {}
+  "name": "jankx/fields",
+  "description": "Jankx Fields is a simple framework used to create meta box, settings, form, etc",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Puleeno Nguyen",
+      "email": "puleeno@gmail.com"
+    }
+  ],
+  "require": {}
 }
