@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "jankx/fields",
   "description": "Jankx Fields is a simple framework used to create meta box, settings, form, etc",
   "type": "library",
@@ -11,4 +12,24 @@
     }
   ],
   "require": {}
+=======
+    "name": "foxy-theme-framework/fields",
+    "type": "library",
+    "require": {
+        "php": ">= 5.4",
+        "foxy-theme-framework/foxy": "*"
+    },
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "WPClouds",
+            "email": "support@wpclouds.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "init.php"
+        ]
+    }
+>>>>>>> cb0ce235b48e9d311847189a7b7f8037d318dfc7
 }
