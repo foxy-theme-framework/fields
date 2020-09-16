@@ -1,6 +1,6 @@
 {
   "name": "ramphor/fields",
-  "description": "Jankx Fields is a simple framework used to create meta box, settings, form, etc",
+  "description": "Ramphor Fields is a simple framework used to create meta box, settings, form, etc",
   "type": "library",
   "license": "MIT",
   "minimum-stability": "dev",
@@ -13,7 +13,8 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "Ramphor\\Fields\\": "src/"
+      "Ramphor\\Fields\\": "src/",
+      "Ramphor\\Fields\\Fields": "fields/"
     }
   }
 }
