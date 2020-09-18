@@ -1,0 +1,23 @@
+{
+  "name": "@ramohor/fields",
+  "version": "1.0.0",
+  "description": "Ramphor Fields is a simple framework used to create meta box, settings, form, etc.",
+  "main": "src/index.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramphor/fields.git"
+  },
+  "keywords": [
+    "options",
+    "framework"
+  ],
+  "author": "Puleeno Nguyen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ramphor/fields/issues"
+  },
+  "homepage": "https://github.com/ramphor/fields#readme"
+}
